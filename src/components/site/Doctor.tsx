@@ -20,7 +20,7 @@ const Doctor = () => (
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
         <DoctorCard
           image={drOmer}
-          imageClassName="scale-125 object-[center_30%]"
+          imageClassName="scale-150 object-[center_25%]"
           alt="Asst. Prof. Dr. Muhammad Omer Siddiqui — Cosmetic Dentist at Denticare Dental Clinic Islamabad"
           name={<>Asst. Prof. Dr. Muhammad <span className="text-gradient">Omer Siddiqui</span></>}
           credentials="BDS, MHPE · PMDC Verified Dentist"
