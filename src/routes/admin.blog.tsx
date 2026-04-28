@@ -48,10 +48,15 @@ function AdminBlog() {
   }, [isOwner]);
 
   const refresh = async () => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
       .order("created_at", { ascending: false });
+    
+    if (error) {
+      console.error("Error refreshing posts:", error);
+      toast.error("Failed to load posts");
+    }
     setPosts((data as Post[]) ?? []);
   };
 

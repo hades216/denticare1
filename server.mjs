@@ -1,8 +1,7 @@
 import { createServer } from 'node:http';
-import { createApp, eventHandler, toNodeListener, fromWebHandler, setResponseHeader } from 'h3';
+import { createApp, eventHandler, toNodeListener, setResponseHeader } from 'h3';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
-import handler from './dist/server/server.js';
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -30,7 +29,7 @@ app.use(eventHandler(async (event) => {
   const path = event.path.split('?')[0];
   if (path === '/' || path === '/index.html') return;
 
-  const filePath = join(process.cwd(), 'dist', 'client', path);
+  const filePath = join(process.cwd(), 'dist', path);
   
   if (existsSync(filePath) && !statSync(filePath).isDirectory()) {
     try {
@@ -44,8 +43,15 @@ app.use(eventHandler(async (event) => {
   }
 }));
 
-// Fallback to TanStack Start web handler
-app.use(eventHandler(fromWebHandler(handler.fetch)));
+// Fallback to index.html for SPA routing
+app.use(eventHandler(async (event) => {
+  const indexPath = join(process.cwd(), 'dist', 'index.html');
+  if (existsSync(indexPath)) {
+    const html = readFileSync(indexPath, 'utf-8');
+    setResponseHeader(event, 'Content-Type', 'text/html');
+    return html;
+  }
+}));
 
 const port = process.env.PORT || 3000;
 createServer(toNodeListener(app)).listen(port, '0.0.0.0', () => {

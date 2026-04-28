@@ -19,7 +19,7 @@ env:
 jobs:
 # Please do not rename this job
   build-project:
-    name: build denticare1
+    name: build denticare2
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -46,9 +46,9 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-us.ionos.space
-          project-id: 37459972-4843-4197-9069-1a12cf6cd3c8
+          project-id: 00b965dc-3224-4d71-84d0-6c4599f41b03
           branch-id: ${{ inputs.branch-id }}
           version: ${{ github.sha }}
           folder: ${{ env.DEPLOYMENT_FOLDER }}
-          config-file: .deploy-now/denticare1/config.yaml
+          config-file: .deploy-now/denticare2/config.yaml
           action: upload

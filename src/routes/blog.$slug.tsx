@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import AnimatedBackground from "@/components/site/AnimatedBackground";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogPostPage,
@@ -38,17 +39,32 @@ function BlogPostPage() {
   const [missing, setMissing] = useState(false);
 
   useEffect(() => {
-    supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", slug)
-      .eq("published", true)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (!data) setMissing(true);
-        else setPost(data as Post);
+    const fetchPost = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("blog_posts")
+          .select("*")
+          .eq("slug", slug)
+          .eq("published", true)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error fetching post:", error);
+          toast.error("Failed to load blog post");
+          setMissing(true);
+        } else if (!data) {
+          setMissing(true);
+        } else {
+          setPost(data as Post);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchPost();
   }, [slug]);
 
   return (

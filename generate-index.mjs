@@ -10,8 +10,8 @@ server.stdout.on('data', async (data) => {
     try {
       const res = await fetch('http://localhost:3000');
       const html = await res.text();
-      writeFileSync('dist/client/index.html', html);
-      console.log('Successfully generated dist/client/index.html');
+      writeFileSync('dist/index.html', html);
+      console.log('Successfully generated dist/index.html');
       server.kill();
       process.exit(0);
     } catch (e) {

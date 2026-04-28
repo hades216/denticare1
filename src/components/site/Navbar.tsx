@@ -6,13 +6,13 @@ import logo from "@/assets/denticare-logo.png";
 import { useAuth } from "@/hooks/useAuth";
 
 const links = [
-  { href: "/#home", label: "Home" },
-  { href: "/#services", label: "Services" },
-  { href: "/#about", label: "About" },
-  { href: "/#doctor", label: "Dentists" },
-  { href: "/#reviews", label: "Reviews" },
-  { href: "/blog", label: "Blog" },
-  { href: "/#contact", label: "Contact" },
+  { to: "/", label: "Home" },
+  { to: "/", hash: "services", label: "Services" },
+  { to: "/", hash: "about", label: "About" },
+  { to: "/", hash: "doctor", label: "Dentists" },
+  { to: "/", hash: "reviews", label: "Reviews" },
+  { to: "/blog", label: "Blog" },
+  { to: "/", hash: "contact", label: "Contact" },
 ];
 
 const Navbar = () => {
@@ -40,23 +40,24 @@ const Navbar = () => {
         }`}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          <a href="#home" className="flex items-center" aria-label="Denticare Dental Clinic — Home">
+          <Link to="/" className="flex items-center" aria-label="Denticare Dental Clinic — Home">
             <img
               src={logo}
               alt="Denticare Dental Clinic logo"
               className="h-20 sm:h-24 w-auto object-contain"
             />
-          </a>
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
+              <Link
+                key={l.label}
+                to={l.to}
+                hash={l.hash}
                 className="text-base font-medium text-foreground/80 hover:text-primary transition-colors story-link"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -99,14 +100,15 @@ const Navbar = () => {
           <div className="lg:hidden px-4 pb-4 animate-fade-in">
             <div className="flex flex-col gap-3">
               {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  hash={l.hash}
                   onClick={() => setOpen(false)}
                   className="py-2 text-foreground/80 font-medium"
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
               <Button asChild variant="hero" className="mt-2">
                 <a href="#book" onClick={() => setOpen(false)}>
