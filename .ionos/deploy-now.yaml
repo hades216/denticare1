@@ -4,6 +4,6 @@ deployments:
     type: nodejs
     build:
       command: npm run build
-      directory: dist
+      directory: .
     runtime:
       command: npm start

@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { createApp, eventHandler, toNodeListener, fromWebHandler, setResponseHeader } from 'h3-v2';
+import { createApp, eventHandler, toNodeListener, fromWebHandler, setResponseHeader } from 'h3';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import handler from './dist/server/server.js';
